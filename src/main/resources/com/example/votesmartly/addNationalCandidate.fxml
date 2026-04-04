@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.addNationalCandidateController">
+    <children>
+        <Label layoutX="78.0" layoutY="59.0" prefHeight="38.0" prefWidth="258.0" text="Add Candidates from a file :">
+            <font>
+                <Font name="Bodoni MT" size="22.0" />
+            </font>
+        </Label>
+        <Label layoutX="78.0" layoutY="280.0" prefHeight="52.0" prefWidth="258.0" text="Add Candidate manually :">
+            <font>
+                <Font name="Bodoni MT" size="22.0" />
+            </font>
+        </Label>
+        <Label layoutX="176.0" layoutY="318.0" prefHeight="27.0" prefWidth="106.0" text="Name :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="176.0" layoutY="364.0" prefHeight="27.0" prefWidth="106.0" text="Date of Birth :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="176.0" layoutY="408.0" prefHeight="27.0" prefWidth="106.0" text="Voter Id :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="176.0" layoutY="465.0" prefHeight="27.0" prefWidth="106.0" text="Constituency :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameField" layoutX="322.0" layoutY="319.0" prefHeight="26.0" prefWidth="357.0" promptText="Please Enter Name of Voter" />
+        <TextField fx:id="voterIdField" layoutX="323.0" layoutY="409.0" prefHeight="26.0" prefWidth="358.0" promptText="Please Enter Voter Id" />
+        <DatePicker fx:id="dobPicker" layoutX="322.0" layoutY="365.0" promptText="Select Date of Birth" />
+        <Button layoutX="229.0" layoutY="631.0" mnemonicParsing="false" onAction="#addCandidate" prefHeight="26.0" prefWidth="106.0" styleClass="yes" stylesheets="@opening.css" text="Add Candidate" />
+        <Button layoutX="538.0" layoutY="631.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" styleClass="no" text="Cancel" />
+        <ComboBox fx:id="constituencyBox" layoutX="323.0" layoutY="466.0" prefHeight="26.0" prefWidth="214.0" promptText="Select Constituency" />
+        <Label fx:id="duplicateVoter" layoutX="323.0" layoutY="435.0" prefHeight="18.0" prefWidth="358.0" text="A voter with this Id already exists!" visible="false">
+            <styleClass>
+                <String fx:value="forWhite" />
+                <String fx:value="back" />
+            </styleClass>
+        </Label>
+        <Button fx:id="fileButton" layoutX="335.0" layoutY="65.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="26.0" prefWidth="214.0" styleClass="root-bg" stylesheets="@opening.css" text="Please Select Necessary files" />
+        <ListView fx:id="listView" layoutX="333.0" layoutY="97.0" prefHeight="142.0" prefWidth="358.0" styleClass="mark" />
+        <Button layoutX="333.0" layoutY="267.0" mnemonicParsing="false" onAction="#addCandidatesFromFile" prefHeight="26.0" prefWidth="106.0" styleClass="yes" text="Add Candidates" />
+        <Button layoutX="609.0" layoutY="267.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" styleClass="no" text="Remove Files" />
+        <Label fx:id="fileError" layoutX="333.0" layoutY="248.0" prefHeight="18.0" prefWidth="358.0" text="Invalid Files!" visible="false">
+            <styleClass>
+                <String fx:value="back" />
+                <String fx:value="forWhite" />
+            </styleClass>
+        </Label>
+      <Label layoutX="176.0" layoutY="512.0" prefHeight="27.0" prefWidth="106.0" text="Candidate Id :">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="candidateIdField" layoutX="323.0" layoutY="512.0" prefHeight="26.0" prefWidth="358.0" promptText="Please Enter Candidate Id" />
+      <Label fx:id="duplicateCandidate" layoutX="324.0" layoutY="546.0" prefHeight="18.0" prefWidth="267.0" text="A candidate with this Id already exists!" visible="false">
+         <styleClass>
+            <String fx:value="forWhite" />
+            <String fx:value="back" />
+         </styleClass>
+      </Label>
+      <Label layoutX="176.0" layoutY="564.0" prefHeight="27.0" prefWidth="138.0" text="Election Symbol :">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="symbol" layoutX="323.0" layoutY="571.0" prefHeight="26.0" prefWidth="358.0" promptText="Please put Election Symbol" />
+      <Label fx:id="symbolError" layoutX="324.0" layoutY="604.0" prefHeight="18.0" prefWidth="267.0" text="A candidate with this symbol already exists!" visible="false">
+         <styleClass>
+            <String fx:value="forWhite" />
+            <String fx:value="back" />
+         </styleClass>
+      </Label>
+      <Label fx:id="nameError" layoutX="322.0" layoutY="345.0" prefHeight="18.0" prefWidth="358.0" text="Name can not be empty!" visible="false">
+         <styleClass>
+            <String fx:value="back" />
+            <String fx:value="forWhite" />
+         </styleClass>
+      </Label>
+      <Label fx:id="dobError" layoutX="323.0" layoutY="391.0" prefHeight="18.0" prefWidth="358.0" text="Date of Birth must be selected" visible="false">
+         <styleClass>
+            <String fx:value="back" />
+            <String fx:value="forWhite" />
+         </styleClass>
+      </Label>
+      <Label fx:id="constError" layoutX="323.0" layoutY="492.0" prefHeight="18.0" prefWidth="358.0" text="A constituency must be selected!" visible="false">
+         <styleClass>
+            <String fx:value="forWhite" />
+            <String fx:value="back" />
+         </styleClass>
+      </Label>
+      <Button layoutX="805.0" layoutY="645.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="51.0"
+              onAction="#onBack" styleClass="back" text="Back" />
+    </children>
+
+</AnchorPane>

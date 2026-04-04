@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.nationalIndividualResultController">
+   <children>
+      <Label fx:id="resultLabel" layoutX="290.0" prefHeight="48.0" prefWidth="608.0" text="Result of " textFill="#15a5e5">
+         <font>
+            <Font name="Brush Script MT Italic" size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="resultTable" layoutY="48.0" prefHeight="322.0" prefWidth="915.0">
+        <columns>
+          <TableColumn fx:id="candNoCol" prefWidth="69.60000455379486" text="Cand. No" />
+          <TableColumn fx:id="candNameCol" prefWidth="375.2000198364258" text="Candidate's Name" />
+            <TableColumn fx:id="symbolCol" prefWidth="152.79995727539062" text="Symbol" />
+            <TableColumn fx:id="candIdCol" prefWidth="153.5999755859375" text="Candidate Id" />
+            <TableColumn fx:id="voteRcvdCol" prefWidth="160.00006103515625" text="Vote Recieved" />
+        </columns>
+      </TableView>
+      <Label fx:id="totalVoterLabel" layoutX="649.0" layoutY="402.0" prefHeight="18.0" prefWidth="264.0" text="Total Voters :" />
+      <Label fx:id="totalCandLabel" layoutX="649.0" layoutY="446.0" prefHeight="18.0" prefWidth="264.0" text="Total Candidates :" />
+      <Label fx:id="winnerLabel" layoutX="649.0" layoutY="484.0" prefHeight="34.0" prefWidth="264.0" text="Winner :" wrapText="true" />
+      <Label fx:id="winnerSymbolLabel" layoutX="649.0" layoutY="546.0" prefHeight="18.0" prefWidth="264.0" text="Winning Symbol :" />
+      <Label fx:id="voteCastedLabel" layoutX="649.0" layoutY="593.0" prefHeight="18.0" prefWidth="264.0" text="Vote Casted :" />
+      <Label fx:id="percentLabel" layoutX="649.0" layoutY="629.0" prefHeight="18.0" prefWidth="264.0" text="Vote Casting Percentage :" />
+      <PieChart fx:id="resultChart" layoutX="14.0" layoutY="379.0" prefHeight="296.0" prefWidth="500.0" />
+      <Button fx:id="backBtn" layoutX="820.0" layoutY="657.0" mnemonicParsing="false" styleClass="back" text="Back" />
+   </children>
+</AnchorPane>

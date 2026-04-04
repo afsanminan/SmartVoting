@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="683.0" prefWidth="915.0" styleClass="root-bg" stylesheets="@opening.css"
+            xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.votesmartly.CreatingAccountController">
+   <children>
+      <Label layoutX="213.0" layoutY="189.0" prefHeight="55.0" prefWidth="547.0" text="Create an account as the only controller of this app... ">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="username" layoutX="349.0" layoutY="259.0" prefHeight="26.0" prefWidth="217.0" promptText="Set Username" />
+      <Label fx:id="usernameError" layoutX="349.0" layoutY="285.0" textFill="RED" style="-fx-font-size: 11px;" />
+      <PasswordField fx:id="password" layoutX="352.0" layoutY="307.0" prefHeight="26.0" prefWidth="218.0" promptText="Set Strong Password" />
+      <Label fx:id="passwordError" layoutX="352.0" layoutY="333.0" textFill="RED" style="-fx-font-size: 11px;" />
+      <PasswordField fx:id="confirmingPass" layoutX="352.0" layoutY="355.0" prefHeight="26.0" prefWidth="218.0" promptText="Confirm your password" />
+      <Label fx:id="confirmError" layoutX="352.0" layoutY="381.0" textFill="RED" style="-fx-font-size: 11px;" />
+      <Button layoutX="394.0" layoutY="413.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0"
+              text="Create Account" onAction="#onCreateAccount"/>
+      <StackPane fx:id="popupPane" visible="false" style="-fx-background-color: white; -fx-background-radius: 12;"
+                 layoutX="300" layoutY="500" prefWidth="300" maxWidth="Infinity">
+         <children>
+            <Label fx:id="popupMessage" text="Account created successfully!"
+                   style="-fx-text-fill: black; -fx-font-size: 16px;"/>
+         </children>
+      </StackPane>
+
+   </children>
+</AnchorPane>

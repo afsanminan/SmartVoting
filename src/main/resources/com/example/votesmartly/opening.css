@@ -1,0 +1,89 @@
+.root-bg {
+    -fx-background-color: #efebc0;
+}
+
+.start-bg{
+    -fx-background-color: #c3f11b;
+    -fx-text-fill: #1b1a1a;
+    -fx-font-size:30;
+}
+.end_bg{
+    -fx-background-color: #efc0c4;
+    -fx-text-fill: #1b1a1a;
+    -fx-font-size:30;
+}
+.login{
+    -fx-background-color: #1b1a1a;
+}
+.options{
+    -fx-background-color: #efebc0;
+}
+.buttons{
+    -fx-background-color: #efc0c4;
+    -fx-text-fill: #1b1a1a;
+}
+.back{
+    -fx-background-color: #1b1a1a;
+    -fx-text-fill: #fa0000;
+}
+.forWhite{
+    -fx-background-color: #fff;
+}
+.yes{
+    -fx-background-color: #0a970a;
+}
+.no{
+    -fx-background-color: #ec0530;
+}
+.textWhite{
+    -fx-text-fill: #fff;
+}
+/* LISTVIEW BACKGROUND */
+
+/* ListView cell normal look */
+
+.check-box:selected .mark {
+    -fx-background-color: green; /* tick mark becomes green */
+}
+
+/* পুরো টেবিলের ব্যাকগ্রাউন্ড এবং বর্ডার */
+.table-view {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+}
+
+/* কলাম হেডারের স্টাইল (ব্যাকগ্রাউন্ড, বর্ডার এবং টেক্সট) */
+.table-view .column-header {
+    -fx-background-color: #222222; /* সামান্য ধূসর কালো যাতে হেডার আলাদা বোঝা যায় */
+    -fx-border-color: white;
+    -fx-border-width: 0 1px 1px 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white; /* হেডারের ভেতরের টেক্সট সাদা */
+    -fx-font-weight: bold;
+}
+
+/* প্রতিটি সেলের টেক্সট এবং বর্ডার */
+.table-view .table-cell {
+    -fx-text-fill: white !important; /* টেবিলের ভেতরের সব ডেটা সাদা */
+    -fx-border-color: white;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-alignment: CENTER; /* ডেটাগুলো মাঝখানে দেখানোর জন্য (ঐচ্ছিক) */
+}
+
+/* টেবিলের ফাঁকা জায়গা বা রো-এর ব্যাকগ্রাউন্ড */
+.table-row-cell {
+    -fx-background-color: black;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* সিলেক্ট করা রো-এর কালার (যাতে ক্লিক করলে বোঝা যায়) */
+.table-row-cell:filled:selected {
+    -fx-background-color: #444444;
+}
+#name_col {
+    -fx-text-fill: white !important;
+}

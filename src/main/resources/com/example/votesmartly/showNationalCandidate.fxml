@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.showNationalCandidateController">
+   <children>
+      <TableView fx:id="cand_table" layoutY="28.0" prefHeight="574.0" prefWidth="915.0">
+        <columns>
+          <TableColumn fx:id="cand_no_col" prefWidth="67.99999856948853" text="Cand. No" />
+          <TableColumn fx:id="name_col" prefWidth="252.80005645751953" text="Name" />
+            <TableColumn fx:id="const_col" prefWidth="150.4000244140625" text="Constituency" />
+            <TableColumn fx:id="voterId_col" prefWidth="154.39999389648438" text="Voter Id" />
+            <TableColumn fx:id="candId_col" prefWidth="123.199951171875" text="Candidate Id" />
+            <TableColumn fx:id="symbol_col" prefWidth="167.2000732421875" text="Symbol" />
+        </columns>
+      </TableView>
+       <ProgressIndicator fx:id="deleteProgress" layoutX="430.0" layoutY="300.0" visible="false" />
+      <Button layoutX="91.0" layoutY="629.0" mnemonicParsing="false" onAction="#addCandidate" prefHeight="26.0" prefWidth="114.0" styleClass="yes" text="Add Candidate" />
+      <Button layoutX="421.0" layoutY="630.0" mnemonicParsing="false" onAction="#deleteCandidates" prefHeight="26.0" prefWidth="122.0" styleClass="no" text="Delete Candidate" />
+      <Button fx:id="backBtn" layoutX="776.0" layoutY="631.0" mnemonicParsing="false" onAction="#onBack" prefHeight="26.0" prefWidth="63.0" styleClass="back" text="Back" />
+      <TextField fx:id="searchField" layoutX="2.0" layoutY="1.0" prefHeight="26.0" prefWidth="357.0" promptText="Search Candidate" />
+      <ComboBox fx:id="constFilter" layoutX="568.0" layoutY="1.0" prefHeight="26.0" prefWidth="346.0" promptText="Filter by Constituency" styleClass="forWhite" />
+      <Label layoutX="361.0" prefHeight="26.0" prefWidth="207.0" text="Candidate's Data">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="23.0" />
+         </font>
+         <styleClass>
+            <String fx:value="back" />
+            <String fx:value="forWhite" />
+         </styleClass>
+      </Label>
+   </children>
+</AnchorPane>

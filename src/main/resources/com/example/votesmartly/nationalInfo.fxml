@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.nationalInfoController">
+   <children>
+      <Label layoutX="265.0" prefHeight="59.0" prefWidth="346.0" text="Current Election Summary" textFill="#d90808">
+         <font>
+            <Font name="Agency FB" size="41.0" />
+         </font>
+      </Label>
+      <TableView fx:id="const_table" layoutY="76.0" prefHeight="528.0" prefWidth="915.0">
+        <columns>
+          <TableColumn fx:id="const_no" minWidth="0.0" prefWidth="68.8000168800354" text="Const. No" />
+            <TableColumn fx:id="name_col" prefWidth="480.79993438720703" text="Name of Constituency" />
+            <TableColumn fx:id="voter_col" prefWidth="187.99993896484375" text="Total Voters" />
+            <TableColumn fx:id="cand_col" prefWidth="174.4000244140625" text="Total Candidates" />
+        </columns>
+      </TableView>
+       <ProgressIndicator fx:id="deleteProgress" layoutX="430.0" layoutY="300.0" visible="false" />
+      <Button fx:id="addConst" layoutX="66.0" layoutY="631.0" mnemonicParsing="false" onAction="#openAddPopup" prefHeight="26.0" prefWidth="111.0" styleClass="yes" text="Add constituency" />
+      <Button fx:id="deleteConst" layoutX="239.0" layoutY="632.0" mnemonicParsing="false" onAction="#deleteSelected" prefHeight="26.0" prefWidth="137.0" styleClass="no" text="Delete Constituency" />
+      <Button layoutX="438.0" layoutY="633.0" mnemonicParsing="false" onAction="#showVoters" prefHeight="26.0" prefWidth="101.0" styleClass="yes" text="Show Voters" />
+      <Button layoutX="633.0" layoutY="633.0" mnemonicParsing="false" onAction="#showCandidates" prefHeight="26.0" prefWidth="111.0" styleClass="no" text="Show Candidates" />
+      <Button layoutX="831.0" layoutY="634.0" mnemonicParsing="false" onAction="#onBack" styleClass="back" text="Back" />
+      <Label fx:id="total_voter" layoutX="689.0" layoutY="14.0" prefHeight="18.0" prefWidth="197.0" text="Total Voters : " />
+      <Label fx:id="total_cand" layoutX="689.0" layoutY="32.0" prefHeight="18.0" prefWidth="198.0" text="Total Candidates :" />
+      <TextField fx:id="const_field" layoutY="50.0" prefHeight="26.0" prefWidth="915.0" promptText="Search by Constituency" />
+   </children>
+</AnchorPane>

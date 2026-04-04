@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.PasswordField?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.NewElectionController">
+
+   <children>
+      <ScrollPane layoutX="-1.0" prefHeight="683.0" prefWidth="915.0">
+         <content>
+            <AnchorPane prefHeight="800.0" prefWidth="900.0">
+
+               <!-- Header -->
+               <Label layoutX="161.0" layoutY="14.0" prefHeight="62.0" prefWidth="664.0" text="Please provide following information for the election" textFill="#150101">
+                  <font>
+                     <Font name="Arial Black" size="22.0" />
+                  </font>
+               </Label>
+
+               <!-- Election Type -->
+               <Label layoutX="161.0" layoutY="103.0" prefHeight="24.0" prefWidth="185.0" text="1. Select the type of election:">
+                  <font>
+                     <Font size="14.0" />
+                  </font>
+               </Label>
+               <ComboBox fx:id="electionTypeComboBox" layoutX="353.0" layoutY="103.0" onAction="#typeSelected" prefHeight="26.0" prefWidth="174.0" promptText="Type of Election" />
+
+               <!-- National Election Section -->
+               <AnchorPane fx:id="forNational" layoutY="147.0" prefHeight="590.0" prefWidth="900.0" visible="false">
+
+                  <Label layoutX="160.0" layoutY="4.0" prefHeight="20.0" prefWidth="256.0" text="2. Select Constituencies for Election:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="constituencies" layoutX="394.0" layoutY="5.0" prefHeight="299.0" prefWidth="200.0" />
+                  <Button fx:id="allSelect" layoutX="394.0" layoutY="322.0" mnemonicParsing="false" onAction="#onSelect" prefHeight="26.0" prefWidth="66.0" text="Select All" />
+                  <Button fx:id="deselectAll" layoutX="507.0" layoutY="322.0" mnemonicParsing="false" onAction="#onDeselect" prefHeight="26.0" prefWidth="86.0" text="Deselect All" />
+                  <Label layoutX="160.0" layoutY="361.0" prefHeight="18.0" prefWidth="158.0" text="3.Set Election Id :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="156.0" layoutY="410.0" prefHeight="20.0" prefWidth="181.0" text="4.Set Password for Access :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="157.0" layoutY="464.0" prefHeight="18.0" prefWidth="178.0" text="5.Confirm your Password :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="electionIdNational" layoutX="388.0" layoutY="358.0" prefHeight="26.0" prefWidth="214.0" promptText="Set Election Id" />
+                  <PasswordField fx:id="passwordNational"
+                                 layoutX="388.0"
+                                 layoutY="407.0"
+                                 prefHeight="26.0"
+                                 prefWidth="214.0"
+                                 promptText="Set Password" />
+
+                  <PasswordField fx:id="confirmPassNational"
+                                 layoutX="385.0"
+                                 layoutY="461.0"
+                                 prefHeight="26.0"
+                                 prefWidth="219.0"
+                                 promptText="Confirm Password" />
+                  <Label fx:id="constituencyError" layoutX="395.0" layoutY="304.0" prefHeight="18.0" prefWidth="300.0"
+                         visible="false"
+                         text="Minimum one constituency has to be selected!">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="idErrorNational" layoutX="388.0" layoutY="384.0" prefHeight="18.0" prefWidth="214.0"
+                         visible="false" text="Election Id can not be empty!">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="passErrorNational" layoutX="386.0" layoutY="435.0" prefHeight="18.0" prefWidth="218.0"
+                         visible="false" text="Password can not be empty!">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="confirmPassErrorNational" layoutX="386.0" layoutY="487.0" prefHeight="18.0" prefWidth="218.0"
+                         visible="false" text="Password does not match!">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Button  layoutX="652.0" layoutY="505.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="88.0"
+                          styleClass="yes" text="Continue" onAction="#onContinueNational"/>
+                  <Button layoutX="801.0" layoutY="506.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" styleClass="back" text="Back" />
+               </AnchorPane>
+
+               <!-- Student Election Section -->
+               <AnchorPane fx:id="forStudent" layoutX="0" layoutY="150.0" prefHeight="512.0" prefWidth="900.0" visible="false">
+                  <Label layoutX="162.0" layoutY="4.0" prefHeight="20.0" prefWidth="300.0" text="2.Select University : ">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="universities" layoutX="353.0" prefHeight="26.0" prefWidth="402.0" promptText="Select university name" />
+                  <Label layoutX="162.0" layoutY="42.0" prefHeight="25.0" prefWidth="174.0" text="3.Posts to be voted :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="posts" layoutX="350.0" layoutY="55.0" prefHeight="190.0" prefWidth="263.0" />
+                  <Button fx:id="allPostSelected" layoutX="354.0" layoutY="265.0" mnemonicParsing="false" onAction="#postSelect" text="Select All" />
+                  <Button fx:id="allPostDeselect" layoutX="529.0" layoutY="264.0" mnemonicParsing="false" onAction="#postDeselect" prefHeight="26.0" prefWidth="83.0" text="Deselect All" />
+                  <Label layoutX="162.0" layoutY="313.0" prefHeight="18.0" prefWidth="135.0" text="4.Set Election Id :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="162.0" layoutY="356.0" prefHeight="18.0" prefWidth="192.0" text="5.Set Password for Access :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="162.0" layoutY="399.0" prefHeight="18.0" prefWidth="166.0" text="6.Confirm your Password :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="electionId" layoutX="350.0" layoutY="311.0" prefHeight="26.0" prefWidth="258.0" promptText="Set Election Id" />
+                  <PasswordField fx:id="password"
+                                 layoutX="350.0"
+                                 layoutY="353.0"
+                                 prefHeight="26.0"
+                                 prefWidth="258.0"
+                                 promptText="Set Password" />
+
+                  <PasswordField fx:id="confirmPass"
+                                 layoutX="350.0"
+                                 layoutY="397.0"
+                                 prefHeight="26.0"
+                                 prefWidth="259.0"
+                                 promptText="Confirm Password" />
+                  <Label fx:id="idError" layoutX="350.0" layoutY="337.0" prefHeight="18.0" prefWidth="258.0" text="Election Id can not be empty!" visible="false">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="passError" layoutX="350.0" layoutY="379.0" prefHeight="18.0" prefWidth="257.0" text="Password can not be empty!" visible="false">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="confirmPassError" layoutX="350.0" layoutY="423.0" prefHeight="18.0" prefWidth="258.0" text="Password does not match!!!" visible="false">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="uniError" layoutX="354.0" layoutY="33.0" prefHeight="18.0" prefWidth="300.0" text="University is not selected!" visible="false">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="postError" layoutX="350.0" layoutY="245.0" prefHeight="18.0" prefWidth="400.0" text="Minimum One post has to be selected to continue election!" visible="false">
+                     <styleClass>
+                        <String fx:value="back" />
+                        <String fx:value="forWhite" />
+                     </styleClass>
+                  </Label>
+                  <Button layoutX="162.0" layoutY="473.0" mnemonicParsing="false" onAction="#onContinue" prefHeight="26.0" prefWidth="85.0" styleClass="yes" text="Continue" />
+                  <Button layoutX="647.0" layoutY="474.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" styleClass="back" text="Back" />
+               </AnchorPane>
+               <Label fx:id="electionError" layoutX="353.0" layoutY="129.0" prefHeight="18.0" prefWidth="174.0" stylesheets="@opening.css" text="Type of election is not selected!" visible="false">
+                  <styleClass>
+                     <String fx:value="back" />
+                     <String fx:value="forWhite" />
+                  </styleClass>
+               </Label>
+
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

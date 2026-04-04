@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.stdIndividualResultController">
+   <children>
+      <Label fx:id="postLabel" layoutX="217.0" prefHeight="42.0" prefWidth="698.0" text="Result of Post :">
+         <font>
+            <Font name="Agency FB" size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="candTable" layoutY="42.0" prefHeight="418.0" prefWidth="915.0">
+        <columns>
+          <TableColumn fx:id="candNo_col" prefWidth="104.8000168800354" text="Candidate No:" />
+          <TableColumn fx:id="candName_col" prefWidth="405.59998321533203" text="Candidate's Name" />
+            <TableColumn fx:id="symbol_col" prefWidth="168.79998779296875" text="Symbol" />
+            <TableColumn fx:id="voteEarned_col" prefWidth="234.40008544921875" text="Vote earned" />
+        </columns>
+      </TableView>
+      <PieChart fx:id="resultChart" layoutX="35.0" layoutY="474.0" prefHeight="194.0" prefWidth="427.0" />
+      <Label fx:id="winnerLabel" layoutX="550.0" layoutY="474.0" prefHeight="26.0" prefWidth="350.0" text="Winner :">
+         <font>
+            <Font name="Lucida Sans Demibold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="symbolLabel" layoutX="550.0" layoutY="511.0" prefHeight="26.0" prefWidth="350.0" text="Symbol :">
+         <font>
+            <Font name="Lucida Sans Demibold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="total_cand_label" layoutX="550.0" layoutY="558.0" prefHeight="26.0" prefWidth="350.0" text="Total Candidates :">
+         <font>
+            <Font name="Lucida Sans Demibold Italic" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="backBtn" layoutX="749.0" layoutY="620.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="Back" />
+   </children>
+</AnchorPane>

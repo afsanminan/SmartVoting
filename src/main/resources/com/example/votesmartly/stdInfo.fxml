@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.stdInfoController">
+   <children>
+      <Label layoutX="275.0" prefHeight="59.0" prefWidth="346.0" text="Current Election Summary" textFill="#d90808">
+         <font>
+            <Font name="Agency FB" size="41.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalVoterLabel" layoutX="703.0" layoutY="14.0" prefHeight="18.0" prefWidth="197.0" text="Total Voters : " />
+      <Label fx:id="totalCandLabel" layoutX="702.0" layoutY="32.0" prefHeight="18.0" prefWidth="198.0" text="Total Candidates :" />
+      <TableView fx:id="post_table" layoutY="59.0" prefHeight="550.0" prefWidth="458.0">
+        <columns>
+          <TableColumn fx:id="post_no" prefWidth="52.799986362457275" text="Post No" />
+          <TableColumn fx:id="post_name_col" prefWidth="307.2000503540039" text="Post Name" />
+            <TableColumn fx:id="cand_in_post_col" prefWidth="96.7999267578125" text="Candidate No" />
+        </columns>
+      </TableView>
+      <TableView fx:id="dept_table" layoutX="458.0" layoutY="59.0" prefHeight="550.0" prefWidth="458.0">
+         <columns>
+            <TableColumn fx:id="dept_no" prefWidth="58.40008544921875" text="Dept No" />
+            <TableColumn fx:id="dept_name_col" prefWidth="302.3999938964844" text="Department  Name" />
+            <TableColumn fx:id="voter_in_dept_col" prefWidth="96.7999267578125" text="Voter No" />
+         </columns>
+      </TableView>
+      <Button fx:id="addPostBtn" layoutX="56.0" layoutY="632.0" mnemonicParsing="false" onAction="#addPostBtnClicked" prefHeight="26.0" prefWidth="111.0" styleClass="yes" text="Add Post" />
+      <Button fx:id="deletePostBtn" layoutX="431.0" layoutY="632.0" mnemonicParsing="false" onAction="#deletePost" prefHeight="26.0" prefWidth="127.0" styleClass="no" text="Delete Post" />
+      <Button fx:id="backBtn" layoutX="802.0" layoutY="632.0" mnemonicParsing="false" onAction="#onBack" styleClass="back" text="Back" />
+   </children>
+</AnchorPane>

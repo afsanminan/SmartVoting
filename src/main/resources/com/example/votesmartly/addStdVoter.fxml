@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.addStdVoterController">
+    <children>
+        <Label layoutX="98.0" layoutY="91.0" prefHeight="38.0" prefWidth="273.0" text="Add Voters from a file :">
+            <font>
+                <Font name="Bodoni MT" size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="98.0" layoutY="305.0" prefHeight="52.0" prefWidth="220.0" text="Add Voter manually :">
+            <font>
+                <Font name="Bodoni MT" size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="207.0" layoutY="358.0" prefHeight="27.0" prefWidth="106.0" text="Name :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="207.0" layoutY="404.0" prefHeight="27.0" prefWidth="106.0" text="Student Id :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <Label layoutX="207.0" layoutY="459.0" prefHeight="27.0" prefWidth="106.0" text="Department :">
+            <font>
+                <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameField" layoutX="326.0" layoutY="357.0" prefHeight="26.0" prefWidth="357.0" promptText="Please Enter Name of Student" />
+        <TextField fx:id="stdId" layoutX="325.0" layoutY="404.0" prefHeight="26.0" prefWidth="358.0" promptText="Please Enter Student Id" />
+        <Button layoutX="229.0" layoutY="515.0" mnemonicParsing="false" onAction="#addVoter" prefHeight="26.0" prefWidth="106.0" styleClass="yes" stylesheets="@opening.css" text="Add Voter" />
+        <Button layoutX="532.0" layoutY="515.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" styleClass="no" text="Cancel" />
+        <Label fx:id="stdIdError" layoutX="326.0" layoutY="431.0" prefHeight="18.0" prefWidth="358.0" text="A student with this Id already exists!" visible="false">
+            <styleClass>
+                <String fx:value="forWhite" />
+                <String fx:value="back" />
+            </styleClass>
+        </Label>
+        <Button fx:id="fileButton" layoutX="342.0" layoutY="98.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="26.0" prefWidth="214.0" styleClass="root-bg" text="Please Select Necessary files" />
+        <ListView fx:id="listView" layoutX="337.0" layoutY="129.0" prefHeight="142.0" prefWidth="358.0" styleClass="mark" />
+        <Button layoutX="336.0" layoutY="292.0" mnemonicParsing="false" onAction="#addVotersFromFile" prefHeight="26.0" prefWidth="94.0" styleClass="yes" text="Add Voters " />
+        <Button layoutX="610.0" layoutY="292.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" styleClass="no" text="Remove Files" />
+        <Label fx:id="fileError" layoutX="337.0" layoutY="271.0" prefHeight="18.0" prefWidth="175.0" text="Invalid Files!" visible="false">
+            <styleClass>
+                <String fx:value="back" />
+                <String fx:value="forWhite" />
+            </styleClass>
+        </Label>
+      <ComboBox fx:id="deptBox" layoutX="325.0" layoutY="459.0" prefHeight="26.0" prefWidth="358.0" promptText="Please Select your department" />
+      <Label fx:id="nameError" layoutX="328.0" layoutY="385.0" prefHeight="18.0" prefWidth="358.0" text="Name can not be empty!" visible="false">
+         <styleClass>
+            <String fx:value="back" />
+            <String fx:value="forWhite" />
+         </styleClass>
+      </Label>
+      <Label fx:id="deptError" layoutX="328.0" layoutY="486.0" prefHeight="18.0" prefWidth="358.0" text="Department must be selected!" visible="false">
+         <styleClass>
+            <String fx:value="back" />
+            <String fx:value="forWhite" />
+         </styleClass>
+      </Label>
+      <Button layoutX="658.0" layoutY="584.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" styleClass="back" text="Back"
+      onAction="#onBack"/>
+    </children>
+
+</AnchorPane>

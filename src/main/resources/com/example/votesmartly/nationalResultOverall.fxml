@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.nationalResultOverall">
+   <children>
+      <Label fx:id="resultLabel" layoutX="308.0" prefHeight="48.0" prefWidth="608.0" text="Result of " textFill="#15a5e5">
+         <font>
+            <Font name="Brush Script MT Italic" size="36.0" />
+         </font>
+      </Label>
+      <TableView fx:id="overallTable" layoutY="74.0" prefHeight="406.0" prefWidth="678.0">
+        <columns>
+          <TableColumn fx:id="constNoCol" prefWidth="61.600035190582275" text="Const No." />
+          <TableColumn fx:id="constNameCol" prefWidth="99.20000457763672" text="Constituency" />
+            <TableColumn fx:id="winnerCol" prefWidth="298.3999938964844" text="Winner" />
+            <TableColumn fx:id="winnerSymbolCol" prefWidth="129.60006713867188" text="Winner's Symbol" />
+            <TableColumn fx:id="totalVoterCol" prefWidth="76.800048828125" text="Total Voters" />
+            <TableColumn fx:id="totalCandCol" prefWidth="102.39996337890625" text="Total Candidates" />
+            <TableColumn fx:id="voteCastedCol" prefWidth="104.800048828125" text="Vote Casted" />
+            <TableColumn fx:id="percentCol" prefWidth="90.0" text="Percentage" />
+        </columns>
+      </TableView>
+      <TextField fx:id="constField" layoutY="48.0" prefHeight="26.0" prefWidth="678.0" promptText="Search by Constituency" />
+      <TableView fx:id="symbolTable" layoutY="534.0" prefHeight="148.0" prefWidth="452.0">
+        <columns>
+          <TableColumn fx:id="symbolName" prefWidth="123.20001363754272" text="Symbol" />
+          <TableColumn fx:id="symbCandCol" prefWidth="72.0000228881836" text="Candidates" />
+            <TableColumn fx:id="symbWinnerCol" prefWidth="66.39996337890625" text="Winners" />
+            <TableColumn fx:id="symbVoteRcvdCol" prefWidth="108.0" text="Vote Recieved" />
+            <TableColumn fx:id="symbPercentCol" prefWidth="76.79998779296875" text="Percentage" />
+        </columns>
+      </TableView>
+      <TextField fx:id="symbolField" layoutY="509.0" prefHeight="26.0" prefWidth="452.0" promptText="Search by Symbol" />
+      <Label fx:id="winnerLabel" layoutY="480.0" prefHeight="34.0" prefWidth="452.0" text="Winning Political Party :">
+         <font>
+            <Font name="Bernard MT Condensed" size="14.0" />
+         </font>
+      </Label>
+      <PieChart fx:id="symbolChart" layoutX="477.0" layoutY="513.0" prefHeight="162.0" prefWidth="294.0" />
+      <PieChart fx:id="overallChart" layoutX="684.0" layoutY="123.0" prefHeight="354.0" prefWidth="232.0" />
+      <Label fx:id="totalVoterLabel" layoutX="696.0" layoutY="53.0" prefHeight="18.0" prefWidth="205.0" text="Total Voters :" />
+      <Label fx:id="totalCandLabel" layoutX="696.0" layoutY="85.0" prefHeight="18.0" prefWidth="206.0" text="Total Vote Casted :" />
+      <Button fx:id="individualBtn" layoutX="486.0" layoutY="485.0" mnemonicParsing="false" onAction="#onIndividualBtnClicked" prefHeight="26.0" prefWidth="191.0" text="Individual Constituency Result" />
+      <Button fx:id="backBtn" layoutX="838.0" layoutY="644.0" mnemonicParsing="false" styleClass="back" text="Back" />
+   </children>
+</AnchorPane>
