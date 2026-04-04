@@ -325,6 +325,7 @@ public class nationalInfoController {
                 if (!rs.next()) {   // not found in DB
                     options.add(c);
                 }
+                System.out.println("Tore chudi");
             }
         } catch (Exception e) { e.printStackTrace(); }
 
@@ -416,5 +417,4 @@ public class nationalInfoController {
             ex.printStackTrace();
         }
     }
-
 }
