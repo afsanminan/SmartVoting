@@ -384,6 +384,7 @@ public class nationalInfoController {
 
             Stage stage = (Stage)((Node)d.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            System.out.println("In show voters change");
 
         } catch(Exception ex) {
             ex.printStackTrace();
