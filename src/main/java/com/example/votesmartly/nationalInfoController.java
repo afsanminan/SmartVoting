@@ -29,7 +29,6 @@ import javafx.scene.control.ButtonType;
 
 public class nationalInfoController {
 
-    // ---------- Row Model ----------
     public static class const_row {
         private String const_name;
         private int const_voter;
@@ -46,7 +45,6 @@ public class nationalInfoController {
         public int getConst_cand() { return const_cand; }
     }
 
-    // ---------- FXML ----------
     @FXML public TableView<const_row> const_table;
     @FXML public TableColumn<const_row, String> name_col;
     @FXML public TableColumn<const_row, Integer> voter_col;
@@ -143,14 +141,12 @@ public class nationalInfoController {
     ObservableList<const_row> tableData = FXCollections.observableArrayList();
 
 
-    // ---------- Initialize ----------
     @FXML
     public void initialize() {
         name_col.setCellValueFactory(new PropertyValueFactory<>("const_name"));
         voter_col.setCellValueFactory(new PropertyValueFactory<>("const_voter"));
         cand_col.setCellValueFactory(new PropertyValueFactory<>("const_cand"));
 
-        // Row numbering করা
         const_no.setCellFactory(col -> new TableCell<>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {

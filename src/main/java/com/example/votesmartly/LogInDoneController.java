@@ -27,7 +27,6 @@ public class LogInDoneController {
         @FXML
         private Button noBtn;
 
-        // ------------------------ NEW ELECTION ------------------------
         public void newElection(ActionEvent event) {
                 popupPane.setVisible(true);
 
@@ -70,7 +69,6 @@ public class LogInDoneController {
                 noBtn.setOnAction(e -> popupPane.setVisible(false));
         }
 
-        // ------------------------ PREVIOUS ELECTION ------------------------
         public void prevElection(ActionEvent event) {
 
                 try (Connection conn = DatabaseConnection.getConnection()) {
@@ -83,7 +81,6 @@ public class LogInDoneController {
                                 int success = rs.getInt("success");
 
                                 if (success == 0) {
-                                        // election ongoing → load addOrRemove.fxml
                                         FXMLLoader loader = new FXMLLoader(getClass().getResource("addOrRemove.fxml"));
                                         Parent root = loader.load();
 
@@ -92,7 +89,6 @@ public class LogInDoneController {
                                         stage.show();
                                 }
                                 else {
-                                        // success != 0 → no ongoing election
                                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                         alert.setTitle("No Ongoing Election");
                                         alert.setHeaderText(null);
@@ -101,7 +97,7 @@ public class LogInDoneController {
                                 }
                         }
                         else {
-                                // No rows in election_info table
+
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                 alert.setTitle("No Election Data");
                                 alert.setHeaderText(null);
@@ -113,13 +109,20 @@ public class LogInDoneController {
                         ex.printStackTrace();
                 }
         }
+        public void onHistory(ActionEvent e) {
+                try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("history.fxml"));
+                        Parent root = loader.load();
 
-        // ------------------------ HISTORY BUTTON ------------------------
-        public void onHistory(ActionEvent event) {
-                // You can add functionality later
+                        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+
+                } catch (IOException ex) {
+                        ex.printStackTrace();
+                }
         }
 
-        // ------------------------ EXIT WITH CONFIRMATION ------------------------
         public void onExit() {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Exit Confirmation");

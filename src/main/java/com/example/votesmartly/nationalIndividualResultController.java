@@ -2,6 +2,7 @@ package com.example.votesmartly;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
@@ -11,10 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class nationalIndividualResultController implements Initializable {
 
-    // ============= FXML =============
+
     @FXML public Label resultLabel;
     @FXML public Label totalVoterLabel;
     @FXML public Label totalCandLabel;
@@ -33,7 +40,6 @@ public class nationalIndividualResultController implements Initializable {
 
     @FXML public PieChart resultChart;
 
-    // ============= Inner Model Class =============
     public static class CandidateModel {
         private int candNo;
         private String name;
@@ -56,14 +62,12 @@ public class nationalIndividualResultController implements Initializable {
         public int getVoteEarned() { return voteEarned; }
     }
 
-    // constituency received before loading
     private String constituency;
 
     public void setConstituency(String c) {
         this.constituency = c;
     }
 
-    // ============= INITIALIZE =============
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         candNoCol.setCellValueFactory(new PropertyValueFactory<>("candNo"));
@@ -73,7 +77,6 @@ public class nationalIndividualResultController implements Initializable {
         candIdCol.setCellValueFactory(new PropertyValueFactory<>("candidateId"));
     }
 
-    // Must be called after setConstituency()
     public void loadData() {
 
         if (constituency == null) return;
@@ -88,7 +91,6 @@ public class nationalIndividualResultController implements Initializable {
 
         try (Connection con = DatabaseConnection.getConnection()) {
 
-            // ======== LOAD CANDIDATES FROM candidate_national =========
             PreparedStatement ps = con.prepareStatement(
                     "SELECT name, sign, candidate_id, vote_earned " +
                             "FROM candidate_national WHERE constituency = ? " +
@@ -108,7 +110,6 @@ public class nationalIndividualResultController implements Initializable {
                 ));
             }
 
-            // ======== LOAD NATIONAL DATA FROM national TABLE =========
             PreparedStatement ps2 = con.prepareStatement(
                     "SELECT total_voters, total_candidates, vote_casted " +
                             "FROM national WHERE constituency = ?"
@@ -126,7 +127,6 @@ public class nationalIndividualResultController implements Initializable {
             e.printStackTrace();
         }
 
-        // ========== SET LABELS ==========
         totalVoterLabel.setText("Total Voters : " + totalVoters);
         totalCandLabel.setText("Total Candidates : " + totalCandidates);
         voteCastedLabel.setText("Vote Casted : " + voteCasted);
@@ -138,19 +138,15 @@ public class nationalIndividualResultController implements Initializable {
 
         resultTable.setItems(list);
 
-        // ===== WINNER =====
         if (!list.isEmpty()) {
             CandidateModel w = list.get(0);
             winnerLabel.setText("Winner : " + w.getName());
             winnerSymbolLabel.setText("Winning Symbol : " + w.getSymbol());
         }
 
-        // ===== PIE CHART =====
         loadPieChart(list, voteCasted);
     }
 
-
-    // ========== PIE CHART METHOD ==========
     private void loadPieChart(ObservableList<CandidateModel> list, int voteCasted) {
 
         if (voteCasted <= 0) return;
@@ -182,5 +178,18 @@ public class nationalIndividualResultController implements Initializable {
         }
 
         resultChart.setData(pieData);
+    }
+    public void onBack(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("nationalResultOverall.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

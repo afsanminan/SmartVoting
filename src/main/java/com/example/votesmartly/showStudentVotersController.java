@@ -26,9 +26,7 @@ import java.util.ResourceBundle;
 
 public class showStudentVotersController implements Initializable {
 
-    // ----------------------------
-    // Student Model
-    // ----------------------------
+
     public static class Student {
 
         private String name;
@@ -46,9 +44,7 @@ public class showStudentVotersController implements Initializable {
         public String getDept() { return dept; }
     }
 
-    // ----------------------------
-    // FXML Components
-    // ----------------------------
+
     @FXML public TableView<Student> student_table;
     @FXML public TableColumn<Student,Integer> stdNo_col;
     @FXML public TableColumn<Student,String> name_col;
@@ -63,9 +59,6 @@ public class showStudentVotersController implements Initializable {
 
     private ObservableList<Student> list = FXCollections.observableArrayList();
 
-    // ----------------------------
-    // Load Data
-    // ----------------------------
     public void loadData() {
 
         list.clear();
@@ -88,7 +81,6 @@ public class showStudentVotersController implements Initializable {
             conn.close();
             student_table.setItems(list);
 
-            // Populate department filter
             ObservableList<String> deptList = FXCollections.observableArrayList();
 
             for(Student s : list)
@@ -104,9 +96,6 @@ public class showStudentVotersController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Initialize
-    // ----------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -115,8 +104,6 @@ public class showStudentVotersController implements Initializable {
         name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         stdId_col.setCellValueFactory(new PropertyValueFactory<>("stdId"));
         dept_col.setCellValueFactory(new PropertyValueFactory<>("dept"));
-
-        // Auto row number
         stdNo_col.setCellFactory(col -> new TableCell<Student,Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -129,16 +116,11 @@ public class showStudentVotersController implements Initializable {
                     setText(String.valueOf(getIndex()+1));
             }
         });
-
-        // Wrap long names
-        // Wrap long text
         name_col.setCellFactory(tc -> wrapCell(name_col));
         stdId_col.setCellFactory(tc -> wrapCell(stdId_col));
         dept_col.setCellFactory(tc -> wrapCell(dept_col));
 
         loadData();
-
-        // Filtered list
         FilteredList<Student> filteredData = new FilteredList<>(list,b->true);
 
         Runnable updateFilter = () -> {
@@ -179,27 +161,15 @@ public class showStudentVotersController implements Initializable {
     private TableCell<Student, String> wrapCell(TableColumn<Student, String> column) {
         TableCell<Student, String> cell = new TableCell<>();
         Text text = new Text();
-
-        // Explicitly set text color to white
         text.setFill(javafx.scene.paint.Color.WHITE);
 
         cell.setGraphic(text);
-
-        // Bind text wrapping to column width
         text.wrappingWidthProperty().bind(column.widthProperty());
-
-        // Bind text content to cell item
         text.textProperty().bind(cell.itemProperty());
-
-        // Allow row height to expand based on text
         student_table.setFixedCellSize(-1);
 
         return cell;
     }
-
-    // ----------------------------
-    // Delete Student
-    // ----------------------------
     @FXML
     public void deleteStudent() {
 
@@ -295,9 +265,6 @@ public class showStudentVotersController implements Initializable {
         new Thread(task).start();
     }
 
-    // ----------------------------
-    // Add Student
-    // ----------------------------
     @FXML
     public void addStudent(ActionEvent e) {
 
@@ -314,9 +281,6 @@ public class showStudentVotersController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Back Button
-    // ----------------------------
     @FXML
     public void onBack() {
 

@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.sql.*;
@@ -37,20 +38,33 @@ public class studentElectionRunningController {
     @FXML public Button endBtn;
     @FXML public Button startVoting;
 
-    // Holds all posts fetched from student table for the current voter's university
     private List<String> postList = new ArrayList<>();
     private int currentPostIndex = 0;
-    private String currentVoterId = "";  // stores the std_id of the voter currently voting
+    private String currentVoterId = "";
 
-    // ========================== INITIALIZE ==========================
     public void initialize() {
         startClock();
         loadDate();
         loadElectionId();
         loadDepartments();
+        blockWindowClose();
     }
 
-    // ========================== CLOCK ==========================
+    private void blockWindowClose() {
+        // We use a post-init hook because the stage isn't available during initialize()
+        javafx.application.Platform.runLater(() -> {
+            Stage stage = (Stage) timeLabel.getScene().getWindow();
+            stage.setOnCloseRequest((WindowEvent event) -> {
+                event.consume(); // ✅ Prevent window from closing
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Action Not Allowed");
+                alert.setHeaderText(null);
+                alert.setContentText("You cannot exit before finishing the election.\nPlease end the election properly using the 'End Vote' button.");
+                alert.showAndWait();
+            });
+        });
+    }
     private void startClock() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("hh:mm:ss a");
         Timeline clock = new Timeline(
@@ -61,12 +75,10 @@ public class studentElectionRunningController {
         clock.play();
     }
 
-    // ========================== DATE ==========================
     private void loadDate() {
         dateLabel.setText(LocalDate.now().toString());
     }
 
-    // ========================== ELECTION ID ==========================
     private void loadElectionId() {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -80,7 +92,6 @@ public class studentElectionRunningController {
         }
     }
 
-    // ========================== LOAD DEPARTMENTS ==========================
     private void loadDepartments() {
         deptBox.getItems().clear();
         try (Connection conn = DatabaseConnection.getConnection();
@@ -94,10 +105,9 @@ public class studentElectionRunningController {
         }
     }
 
-    // ========================== START VOTING BUTTON ==========================
     @FXML
     public void onStartVotingPressed() {
-        // Reset all error labels
+
         stdIdError.setVisible(false);
         nameError.setVisible(false);
         deptError.setVisible(false);
@@ -106,7 +116,7 @@ public class studentElectionRunningController {
         String name    = nameField.getText().trim();
         String dept    = deptBox.getValue();
 
-        // ---- 1. Null / empty checks ----
+
         boolean anyEmpty = false;
 
         if (stdId.isEmpty()) {
@@ -129,7 +139,7 @@ public class studentElectionRunningController {
         }
         if (anyEmpty) return;
 
-        // ---- 2. Check student ID exists ----
+
         String dbName = null;
         String dbDept = null;
         int voteCasted = 0;
@@ -152,15 +162,12 @@ public class studentElectionRunningController {
             return;
         }
 
-        // ---- 3. Name check ----
         boolean hasError = false;
         if (!dbName.equalsIgnoreCase(name)) {
             nameError.setText("The name does not match with the registered informations!");
             nameError.setVisible(true);
             hasError = true;
         }
-
-        // ---- 4. Department check ----
         if (!dbDept.equalsIgnoreCase(dept)) {
             stdIdError.setText("No student exists with this id in this department!");
             stdIdError.setVisible(true);
@@ -169,7 +176,6 @@ public class studentElectionRunningController {
 
         if (hasError) return;
 
-        // ---- 5. Already voted? ----
         if (voteCasted == 1) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Already Voted");
@@ -180,18 +186,14 @@ public class studentElectionRunningController {
             return;
         }
 
-        // ---- 6. All good — begin post-by-post voting ----
         currentVoterId = stdId;
         loadPostsAndBeginVoting(dept);
     }
 
-    // ========================== LOAD POSTS ==========================
     private void loadPostsAndBeginVoting(String dept) {
         postList.clear();
         currentPostIndex = 0;
 
-        // The `student` table has `posts` and `university` columns.
-        // We fetch all posts available (university-wide, not dept-specific).
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "SELECT posts FROM student ORDER BY post_no");
@@ -211,26 +213,16 @@ public class studentElectionRunningController {
 
         showCurrentPost();
     }
-
-    // ========================== SHOW CURRENT POST ==========================
     private void showCurrentPost() {
         if (currentPostIndex >= postList.size()) {
-            // All posts done
             finishVoting();
             return;
         }
 
         String post = postList.get(currentPostIndex);
-        postLabel.setText("Please put your vote for the post : " + post);
-        postLabel.setVisible(true);
-        selectLabel.setVisible(true);
-        postBox.setVisible(true);
-        voteBtn.setVisible(true);
 
-        // Load candidates for this post
         postBox.getItems().clear();
         postBox.setValue(null);
-        postBox.setPromptText("A better campus starts with your wise decision!");
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
@@ -243,14 +235,41 @@ public class studentElectionRunningController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if (postBox.getItems().isEmpty()) {
+            currentPostIndex++;
+            showCurrentPost();
+            return;
+        }
+
+        postLabel.setText("Please put your vote for the post : " + post);
+        postLabel.setVisible(true);
+        selectLabel.setVisible(true);
+        postBox.setVisible(true);
+        voteBtn.setVisible(true);
+
+        final String promptText = "A better campus starts with your wise decision!";
+        postBox.setPromptText(promptText);
+        postBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(promptText);
+                    setStyle("-fx-text-fill: -fx-prompt-text-fill;");
+                } else {
+                    setText(item);
+                    setStyle("");
+                }
+            }
+        });
     }
 
-    // ========================== VOTE BUTTON ==========================
     @FXML
     public void onVotePressed() {
         String selected = postBox.getValue();
 
-        // Must select a candidate
+
         if (selected == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Candidate Selected");
@@ -263,7 +282,6 @@ public class studentElectionRunningController {
         String post          = postList.get(currentPostIndex);
         String candidateName = selected.split(" - ")[0];
 
-        // Confirmation
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Vote");
         confirm.setHeaderText(null);
@@ -273,7 +291,6 @@ public class studentElectionRunningController {
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isEmpty() || result.get() != ButtonType.OK) return;
 
-        // Cast vote for this candidate
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE candidate_std SET vote_earned = vote_earned + 1 " +
@@ -286,7 +303,6 @@ public class studentElectionRunningController {
             return;
         }
 
-        // Move to next post
         currentPostIndex++;
         if (currentPostIndex < postList.size()) {
             showCurrentPost();
@@ -295,15 +311,15 @@ public class studentElectionRunningController {
         }
     }
 
-    // ========================== FINISH VOTING ==========================
+
     private void finishVoting() {
-        // Hide voting section
+
         postLabel.setVisible(false);
         selectLabel.setVisible(false);
         postBox.setVisible(false);
         voteBtn.setVisible(false);
 
-        // Mark voter as having voted
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
                      "UPDATE voter_std SET vote_casted = 1 WHERE std_id = ?")) {
@@ -326,7 +342,7 @@ public class studentElectionRunningController {
         clearForm();
     }
 
-    // ========================== CLEAR FORM ==========================
+
     private void clearForm() {
         stdIdField.clear();
         nameField.clear();
@@ -344,27 +360,27 @@ public class studentElectionRunningController {
         postList.clear();
     }
 
-    // ========================== HELPER ==========================
+
     private void showInfoAlert(String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
     }
+    @FXML
     public void onEndBtn(ActionEvent e)
     {
-        // -------------------- 1. First Warning --------------------
+
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("End Election");
         confirm.setHeaderText(null);
         confirm.setContentText("Are you sure you want to end the vote?\nOnly controller can end vote.");
 
         Optional<ButtonType> result = confirm.showAndWait();
-
         if(result.isEmpty() || result.get() != ButtonType.OK)
             return;
 
-        // -------------------- 2. Input Dialog --------------------
+
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Authentication Required");
 
@@ -374,42 +390,48 @@ public class studentElectionRunningController {
         Label passLabel = new Label("Password:");
         PasswordField passField = new PasswordField();
 
-        javafx.scene.layout.VBox vbox = new javafx.scene.layout.VBox(10, idLabel, idField, passLabel, passField);
+        VBox vbox = new VBox(10, idLabel, idField, passLabel, passField);
         dialog.getDialogPane().setContent(vbox);
 
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         Optional<ButtonType> inputResult = dialog.showAndWait();
-
         if(inputResult.isEmpty() || inputResult.get() != ButtonType.OK)
             return;
 
         String givenId = idField.getText().trim();
         String givenPass = passField.getText().trim();
 
-        // -------------------- 3. Match with DB --------------------
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(
-                     "SELECT id, pass FROM election_info ORDER BY id_db DESC LIMIT 1");
+                     "SELECT id, pass, id_db FROM election_info ORDER BY id_db DESC LIMIT 1");
              ResultSet rs = ps.executeQuery())
         {
             if(rs.next())
             {
                 String dbId = rs.getString("id");
                 String dbPass = rs.getString("pass");
+                int electionDbId = rs.getInt("id_db");
 
                 if(dbId.equals(givenId) && dbPass.equals(givenPass))
                 {
-                    // ✅ MATCH → Go to result page
-                    javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node)e.getSource()).getScene().getWindow();
-                    javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(getClass().getResource("showNationalResultOptions.fxml"));
 
-                    stage.setScene(new javafx.scene.Scene(root));
+                    String updateSQL = "UPDATE election_info SET election_running = 0, success = 1 WHERE id_db = ?";
+                    try (PreparedStatement updateStmt = conn.prepareStatement(updateSQL)) {
+                        updateStmt.setInt(1, electionDbId);
+                        updateStmt.executeUpdate();
+                    }
+
+
+                    Stage stage = (Stage) ((javafx.scene.Node)e.getSource()).getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("showNationalResultOptions.fxml"));
+                    stage.setScene(new Scene(root));
                     stage.show();
                 }
                 else
                 {
-                    // ❌ NOT MATCH
+
                     Alert error = new Alert(Alert.AlertType.ERROR);
                     error.setTitle("Error");
                     error.setHeaderText(null);

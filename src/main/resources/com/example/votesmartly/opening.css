@@ -1,3 +1,5 @@
+
+
 .root-bg {
     -fx-background-color: #efebc0;
 }
@@ -79,7 +81,26 @@
     -fx-border-color: white;
     -fx-border-width: 0 0 1px 0;
 }
-
+/* Inner VirtualFlow content area - must be explicitly black */
+.table-view .virtual-flow {
+    -fx-background-color: black;
+}
+.table-view .virtual-flow .clipped-container {
+    -fx-background-color: black;
+}
+.table-view .virtual-flow .clipped-container .sheet {
+    -fx-background-color: black;
+}
+/* Empty table placeholder */
+.table-view .placeholder {
+    -fx-background-color: black;
+}
+.table-view .placeholder .label {
+    -fx-text-fill: white;
+}
+.progress-bar > .bar {
+    -fx-background-color: green;
+}
 /* সিলেক্ট করা রো-এর কালার (যাতে ক্লিক করলে বোঝা যায়) */
 .table-row-cell:filled:selected {
     -fx-background-color: #444444;

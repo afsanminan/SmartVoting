@@ -14,8 +14,6 @@ public class showNationalResultOptionsController {
     public void onShow() {
         try {
             String electionType = "";
-
-            // -------------------- 1. Get last election type --------------------
             try (java.sql.Connection conn = DatabaseConnection.getConnection();
                  java.sql.PreparedStatement ps = conn.prepareStatement(
                          "SELECT name FROM election_info ORDER BY id_db DESC LIMIT 1");
@@ -26,7 +24,6 @@ public class showNationalResultOptionsController {
                 }
             }
 
-            // -------------------- 2. Decide which FXML --------------------
             String fxmlFile;
 
             if(electionType.equalsIgnoreCase("National Election")) {
@@ -35,7 +32,6 @@ public class showNationalResultOptionsController {
                 fxmlFile = "stdOverallResult.fxml";
             }
 
-            // -------------------- 3. Load Scene --------------------
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 

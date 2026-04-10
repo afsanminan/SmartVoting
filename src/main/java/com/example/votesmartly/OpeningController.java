@@ -6,52 +6,55 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import java.io.File;
+
 import java.io.IOException;
-import java.util.Scanner;
-import javafx.scene.layout.Pane;
-import javafx.scene.Parent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class OpeningController {
 
+    @FXML
+    public void onExit(ActionEvent e)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to exit?");
+
+        if(alert.showAndWait().get() == ButtonType.OK)
+        {
+            System.exit(0);
+        }
+    }
 
     @FXML
-    protected void onExit(ActionEvent event) {
-        Platform.exit();
-    }
-       @FXML
-    protected void onStart(ActionEvent event) throws IOException
-    {
-        File file = new File("password.txt");
-         int x=-1;
-        try (Scanner scanner = new Scanner(file)) {
-            if (scanner.hasNextInt()) {
-              x = scanner.nextInt();
-                System.out.println("No !");
-            } else {
-                System.out.println("No integer found in file!");
-            }
-        } catch (Exception e) {
-            System.out.println("File not found!");
+    protected void onStart(ActionEvent event) throws IOException {
+        String mode = AppConfig.get("mode");
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        FXMLLoader loader;
+
+        if ("client".equals(mode)) {
+            loader = new FXMLLoader(getClass().getResource("clientOpening.fxml"));
+        } else {
+            boolean hasRow = false;
+            try {
+                Connection conn = DatabaseConnection.getConnection();
+                ResultSet rs = conn.createStatement().executeQuery("SELECT 1 FROM password LIMIT 1");
+                hasRow = rs.next();
+                conn.close();
+            } catch (Exception e) { e.printStackTrace(); }
+
+            loader = hasRow
+                    ? new FXMLLoader(getClass().getResource("pass.fxml"))
+                    : new FXMLLoader(getClass().getResource("creatingAccount.fxml"));
         }
 
-        if (x==1) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("pass.fxml"));
-                Scene passScene = new Scene(loader.load());
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(passScene);
-                stage.show();
-            } else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("creatingAccount.fxml"));
-                Scene createScene = new Scene(loader.load());
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(createScene);
-                stage.show();
-
-            }
-
-
+        stage.setScene(new Scene(loader.load()));
+        stage.show();
     }
 }

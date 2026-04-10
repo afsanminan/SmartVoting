@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.control.ProgressBar?>
 <AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.addStdCandidateController">
     <children>
         <Label layoutX="78.0" layoutY="92.0" prefHeight="38.0" prefWidth="273.0" text="Add Candidates from a file :">
@@ -49,6 +49,11 @@
         <Button fx:id="fileButton" layoutX="342.0" layoutY="98.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="26.0" prefWidth="214.0" styleClass="root-bg" text="Please Select Necessary files" />
         <ListView fx:id="listView" layoutX="337.0" layoutY="129.0" prefHeight="142.0" prefWidth="358.0" styleClass="mark" />
         <Button layoutX="336.0" layoutY="292.0" mnemonicParsing="false" onAction="#addCandidatesFromFile" prefHeight="26.0" prefWidth="106.0" styleClass="yes" text="Add Candidates " />
+        <ProgressBar fx:id="progressBar"
+                     layoutX="337.0"
+                     layoutY="330.0"
+                     prefWidth="358.0"
+                     visible="false" />
         <Button layoutX="610.0" layoutY="292.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" styleClass="no" text="Remove Files" />
         <Label fx:id="fileError" layoutX="337.0" layoutY="271.0" prefHeight="18.0" prefWidth="358.0" text="Invalid Files!" visible="false">
             <styleClass>

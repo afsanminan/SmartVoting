@@ -86,14 +86,10 @@ public class showNationalCandidateController implements Initializable {
             pst.close();
             conn.close();
 
-            // Set table data
             cand_table.setItems(list);
-
-            // Populate constituency filter
             ObservableList<String> constList = FXCollections.observableArrayList();
 
             for (Candidate c : list) {
-
                 if (!constList.contains(c.getConsti())) {
                     constList.add(c.getConsti());
                 }
@@ -105,23 +101,16 @@ public class showNationalCandidateController implements Initializable {
             e.printStackTrace();
         }
     }
-    // ----------------------------
-    // Initialize
-    // ----------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        // Multiple row selection
         cand_table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // Column mapping
         name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         voterId_col.setCellValueFactory(new PropertyValueFactory<>("voter_Id"));
         candId_col.setCellValueFactory(new PropertyValueFactory<>("cand_Id"));
         symbol_col.setCellValueFactory(new PropertyValueFactory<>("symbol"));
         const_col.setCellValueFactory(new PropertyValueFactory<>("consti"));
 
-        // Auto row numbering
         cand_no_col.setCellFactory(col -> new TableCell<Candidate, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -134,7 +123,6 @@ public class showNationalCandidateController implements Initializable {
             }
         });
 
-        // Wrap long text
         name_col.setCellFactory(tc -> {
             TableCell<Candidate,String> cell = new TableCell<>();
             Text text = new Text();
@@ -185,13 +173,10 @@ public class showNationalCandidateController implements Initializable {
             return cell;
         });
 
-        // Load data from DB
         loadData();
 
-        // Filtered list
         FilteredList<Candidate> filteredData = new FilteredList<>(list, b -> true);
 
-        // Search + Filter together
         Runnable updateFilter = () -> {
 
             String searchText = searchField.getText();
@@ -224,21 +209,15 @@ public class showNationalCandidateController implements Initializable {
             });
         };
 
-        // Search listener
         searchField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter.run());
 
-        // Filter listener
         constFilter.valueProperty().addListener((obs, oldVal, newVal) -> updateFilter.run());
 
-        // Sorted list
         SortedList<Candidate> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(cand_table.comparatorProperty());
 
         cand_table.setItems(sortedData);
     }
-    // ----------------------------
-    // Delete Candidates
-    // ----------------------------
     @FXML
     public void deleteCandidates() {
 

@@ -23,9 +23,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 public class showNationalVoterController implements Initializable {
 
-    // ----------------------------
-    // Voter Model Class
-    // ----------------------------
     public static class Voter {
 
         private String name;
@@ -45,10 +42,6 @@ public class showNationalVoterController implements Initializable {
         public String getBday() { return bday; }
         public String getConsti() { return consti; }
     }
-
-    // ----------------------------
-    // FXML Components
-    // ----------------------------
     @FXML public TableView<Voter> voter_table;
     @FXML public TableColumn<Voter, Integer> voter_no_col;
     @FXML public TableColumn<Voter, String> name_col;
@@ -62,9 +55,6 @@ public class showNationalVoterController implements Initializable {
 
     private ObservableList<Voter> list = FXCollections.observableArrayList();
 
-    // ----------------------------
-    // Load Data From Database
-    // ----------------------------
     public void loadData() {
 
         list.clear();
@@ -86,7 +76,6 @@ public class showNationalVoterController implements Initializable {
 
             voter_table.setItems(list);
 
-            // Populate constituency filter
             ObservableList<String> constList = FXCollections.observableArrayList();
 
             for(Voter v : list)
@@ -102,22 +91,16 @@ public class showNationalVoterController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Initialize
-    // ----------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        // Enable Multiple Selection
         voter_table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        // Column Mapping
         name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
         voter_id_col.setCellValueFactory(new PropertyValueFactory<>("voter_Id"));
         dob_col.setCellValueFactory(new PropertyValueFactory<>("bday"));
         const_col.setCellValueFactory(new PropertyValueFactory<>("consti"));
 
-        // Auto Row Number
         voter_no_col.setCellFactory(col -> new TableCell<Voter, Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -131,7 +114,6 @@ public class showNationalVoterController implements Initializable {
             }
         });
 
-        // Wrap long names
         name_col.setCellFactory(tc -> {
             TableCell<Voter, String> cell = new TableCell<>() {
                 private final Label label = new Label();
@@ -156,13 +138,9 @@ public class showNationalVoterController implements Initializable {
             return cell;
         });
 
-        // Load database data
         loadData();
-
-        // FilteredList
         FilteredList<Voter> filteredData = new FilteredList<>(list, b -> true);
 
-        // Search + Filter together
         Runnable updateFilter = () -> {
 
             String searchText = searchField.getText();
@@ -172,8 +150,6 @@ public class showNationalVoterController implements Initializable {
 
                 boolean matchesSearch = true;
                 boolean matchesConst = true;
-
-                // Search logic
                 if (searchText != null && !searchText.isEmpty()) {
 
                     String keyword = searchText.toLowerCase();
@@ -184,8 +160,6 @@ public class showNationalVoterController implements Initializable {
                                     voter.getBday().toLowerCase().contains(keyword) ||
                                     voter.getConsti().toLowerCase().contains(keyword);
                 }
-
-                // Constituency filter
                 if (selectedConst != null && !selectedConst.isEmpty()) {
                     matchesConst = voter.getConsti().equals(selectedConst);
                 }
@@ -194,21 +168,15 @@ public class showNationalVoterController implements Initializable {
             });
         };
 
-        // Search listener
         searchField.textProperty().addListener((obs, oldVal, newVal) -> updateFilter.run());
 
-        // Filter listener
         constFilter.valueProperty().addListener((obs, oldVal, newVal) -> updateFilter.run());
 
-        // Sorting
         SortedList<Voter> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(voter_table.comparatorProperty());
 
         voter_table.setItems(sortedData);
     }
-    // ----------------------------
-    // Add Voters Scene
-    // ----------------------------
     @FXML
     public void addVoters(ActionEvent e) {
 
@@ -230,9 +198,6 @@ public class showNationalVoterController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Delete Selected Voters
-    // ----------------------------
     @FXML
     public void removeVoters() {
 
@@ -361,9 +326,6 @@ public class showNationalVoterController implements Initializable {
         new Thread(deleteTask).start();
     }
 
-    // ----------------------------
-    // Back Button
-    // ----------------------------
     @FXML
     public void onBack() {
 

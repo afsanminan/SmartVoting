@@ -6,22 +6,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Optional;
 
 public class addOrRemoveController {
 
     @FXML public Button addVoterButton;
     @FXML public Button addCandButton;
 
-    // -----------------------------
-    // Add Voter Button
-    // -----------------------------
     public void addVoter(ActionEvent e)
     {
         try {
@@ -39,7 +37,6 @@ public class addOrRemoveController {
 
                 Stage stage = (Stage) addVoterButton.getScene().getWindow();
                 Parent root;
-
                 if(electionType.equalsIgnoreCase("National Election"))
                 {
                     root = FXMLLoader.load(getClass().getResource("addNationalVoter.fxml"));
@@ -48,7 +45,6 @@ public class addOrRemoveController {
                 {
                     root = FXMLLoader.load(getClass().getResource("addStdVoter.fxml"));
                 }
-
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
@@ -64,17 +60,12 @@ public class addOrRemoveController {
         }
     }
 
-    // -----------------------------
-    // Add Candidate Button
-    // -----------------------------
     public void addCandidate(ActionEvent ex)
     {
         try {
 
             Connection conn = DatabaseConnection.getConnection();
-
             String sql = "SELECT name FROM election_info ORDER BY id_db DESC LIMIT 1";
-
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
@@ -108,15 +99,11 @@ public class addOrRemoveController {
             e.printStackTrace();
         }
     }
-    // -----------------------------
-// Show Candidate
-// -----------------------------
     public void showCandidate()
     {
         try {
 
             Connection conn = DatabaseConnection.getConnection();
-
             String sql = "SELECT name FROM election_info ORDER BY id_db DESC LIMIT 1";
 
             Statement st = conn.createStatement();
@@ -153,10 +140,6 @@ public class addOrRemoveController {
         }
     }
 
-
-    // -----------------------------
-// Show Voter
-// -----------------------------
     public void showVoter()
     {
         try {
@@ -244,16 +227,17 @@ public class addOrRemoveController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Warning");
         alert.setHeaderText(null);
-        alert.setContentText("After starting the election, no modification of any data can be done! You can not add or remove any voter or candidate.You will not be able to see them until the election ends! Are you sure you want to start election?");
+        alert.setContentText("After starting the election, no modification of any data can be done! Are you sure you want to start election?");
 
-        // Wait for user response
         if(alert.showAndWait().get() == ButtonType.OK)
         {
             try {
                 Connection conn = DatabaseConnection.getConnection();
-
+                String updateSql = "UPDATE election_info SET election_running = 1 WHERE id_db = (SELECT MAX(id_db) FROM election_info)";
+                PreparedStatement psUpdate = conn.prepareStatement(updateSql);
+                psUpdate.executeUpdate();
+                psUpdate.close();
                 String sql = "SELECT name FROM election_info ORDER BY id_db DESC LIMIT 1";
-
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql);
 
@@ -273,20 +257,18 @@ public class addOrRemoveController {
                         root = FXMLLoader.load(getClass().getResource("studentElectionRunning.fxml"));
                     }
 
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
+                    stage.setScene(new Scene(root));
                     stage.show();
                 }
 
-                st.close();
                 rs.close();
+                st.close();
                 conn.close();
 
             } catch(Exception ex) {
                 ex.printStackTrace();
             }
         }
-        // যদি Cancel দেয় → কিছুই হবে না (alert auto close)
     }
     public void onExit(ActionEvent e)
     {
@@ -299,6 +281,5 @@ public class addOrRemoveController {
         {
             System.exit(0);
         }
-        // Cancel দিলে কিছুই হবে না
     }
 }

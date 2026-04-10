@@ -5,14 +5,11 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.StackPane?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0"
-      prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25"
-      focusTraversable="true"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.PassController">
+<VBox focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.PassController">
    <children>
       <AnchorPane prefHeight="597.0" prefWidth="915.0">
          <children>
@@ -27,16 +24,16 @@
                   <Label fx:id="userError" layoutX="57.0" layoutY="130.0" textFill="RED" />
                   <PasswordField fx:id="password" layoutX="58.0" layoutY="150.0" prefHeight="26.0" prefWidth="133.0" promptText="Enter Password" />
                   <Label fx:id="passError" layoutX="58.0" layoutY="180.0" textFill="RED" />
-                  <Button layoutX="99.0" layoutY="200.0" mnemonicParsing="false" text="Login" onAction="#onLogin"/>
+                  <Button layoutX="99.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
+                  <Button fx:id="deleteAccount" layoutX="67.0" layoutY="243.0" mnemonicParsing="false" onAction="#onDelete" prefHeight="26.0" prefWidth="114.0" text="Delete Account" />
 
                </children>
             </AnchorPane>
-            <StackPane fx:id="popupPane" layoutX="350.0" layoutY="400.0" prefWidth="200.0" prefHeight="50.0" visible="false">
-               <Label fx:id="popupMessage" textFill="WHITE" style="-fx-background-color: green; -fx-padding: 10;" />
+            <StackPane fx:id="popupPane" layoutX="350.0" layoutY="400.0" prefHeight="50.0" prefWidth="200.0" visible="false">
+               <Label fx:id="popupMessage" style="-fx-background-color: green; -fx-padding: 10;" textFill="WHITE" />
             </StackPane>
 
-            <Button layoutX="657.0" layoutY="508.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0"
-                    text="Back" textFill="#230000">
+            <Button layoutX="657.0" layoutY="508.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Back" textFill="#230000">
                <font>
                   <Font size="24.0" />
                </font>

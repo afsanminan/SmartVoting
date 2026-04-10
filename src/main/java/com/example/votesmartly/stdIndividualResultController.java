@@ -3,12 +3,19 @@ package com.example.votesmartly;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +34,6 @@ public class stdIndividualResultController {
     @FXML public Label total_cand_label;
     @FXML public Button backBtn;
 
-    // ========================== ROW MODEL ==========================
     public static class CandRow {
         private final SimpleStringProperty candNo;
         private final SimpleStringProperty name;
@@ -47,7 +53,6 @@ public class stdIndividualResultController {
         public String getVoteEarned() { return voteEarned.get(); }
     }
 
-    // rgb values for 6 distinct colors — avoids # hex entirely
     private String getSliceColor(int index) {
         switch (index) {
             case 0: return "rgb(78,121,167)";   // blue
@@ -60,14 +65,11 @@ public class stdIndividualResultController {
         }
     }
 
-    // ========================== ENTRY POINT ==========================
     public void loadPost(String postName) {
         postLabel.setText("Result of Post : " + postName);
         setupColumns();
         loadCandidates(postName);
     }
-
-    // ========================== COLUMN SETUP ==========================
     private void setupColumns() {
         candNo_col.setCellValueFactory(new PropertyValueFactory<>("candNo"));
         candName_col.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -75,7 +77,6 @@ public class stdIndividualResultController {
         voteEarned_col.setCellValueFactory(new PropertyValueFactory<>("voteEarned"));
     }
 
-    // ========================== LOAD CANDIDATES ==========================
     private void loadCandidates(String postName) {
         ObservableList<CandRow> rows = FXCollections.observableArrayList();
 
@@ -145,7 +146,6 @@ public class stdIndividualResultController {
         buildPieChart(pieNames, pieVotes, totalCasted);
     }
 
-    // ========================== PIE CHART ==========================
     private void buildPieChart(List<String> names, List<Long> votes, long totalCasted) {
 
         ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
@@ -186,5 +186,18 @@ public class stdIndividualResultController {
                 }
             }
         });
+    }
+    public void onBack(ActionEvent e) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("stdOverallResult.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

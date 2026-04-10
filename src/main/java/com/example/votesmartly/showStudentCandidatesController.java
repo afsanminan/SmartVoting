@@ -25,10 +25,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class showStudentCandidatesController implements Initializable {
-
-    // ----------------------------
-    // Candidate Model
-    // ----------------------------
     public static class StudentCand {
 
         private String name;
@@ -55,9 +51,6 @@ public class showStudentCandidatesController implements Initializable {
         public String getDept() { return dept; }
     }
 
-    // ----------------------------
-    // FXML
-    // ----------------------------
     @FXML public TableView<StudentCand> studentCand_table;
 
     @FXML public TableColumn<StudentCand,Integer> candNo_col;
@@ -76,9 +69,6 @@ public class showStudentCandidatesController implements Initializable {
 
     private ObservableList<StudentCand> list = FXCollections.observableArrayList();
 
-    // ----------------------------
-    // Load Data
-    // ----------------------------
     public void loadData() {
 
         list.clear();
@@ -101,8 +91,6 @@ public class showStudentCandidatesController implements Initializable {
             }
 
             studentCand_table.setItems(list);
-
-            // populate department filter
             ObservableList<String> deptList = FXCollections.observableArrayList();
 
             for(StudentCand c : list)
@@ -118,9 +106,6 @@ public class showStudentCandidatesController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Initialize
-    // ----------------------------
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -133,7 +118,6 @@ public class showStudentCandidatesController implements Initializable {
         symbol_col.setCellValueFactory(new PropertyValueFactory<>("symbol"));
         dept_col.setCellValueFactory(new PropertyValueFactory<>("dept"));
 
-        // Auto row number
         candNo_col.setCellFactory(col -> new TableCell<StudentCand,Integer>() {
             @Override
             protected void updateItem(Integer item, boolean empty) {
@@ -147,7 +131,6 @@ public class showStudentCandidatesController implements Initializable {
             }
         });
 
-        // Text wrapping for large text
         name_col.setCellFactory(tc -> wrapCell(name_col));
         stdId_col.setCellFactory(tc -> wrapCell(stdId_col));
         candId_col.setCellFactory(tc -> wrapCell(candId_col));
@@ -156,7 +139,6 @@ public class showStudentCandidatesController implements Initializable {
         dept_col.setCellFactory(tc -> wrapCell(dept_col));
         loadData();
 
-        // Filtered list
         FilteredList<StudentCand> filteredData = new FilteredList<>(list,b->true);
 
         Runnable updateFilter = () -> {
@@ -197,33 +179,22 @@ public class showStudentCandidatesController implements Initializable {
         studentCand_table.setItems(sortedData);
     }
 
-    // ----------------------------
-    // Wrap Cell Method
-    // ----------------------------
     private TableCell<StudentCand, String> wrapCell(TableColumn<StudentCand, String> column) {
         TableCell<StudentCand, String> cell = new TableCell<>();
         Text text = new Text();
 
-        // Explicitly set text color to white
         text.setFill(javafx.scene.paint.Color.WHITE);
 
         cell.setGraphic(text);
 
-        // Bind text wrapping to column width
         text.wrappingWidthProperty().bind(column.widthProperty());
 
-        // Bind text content to cell item
         text.textProperty().bind(cell.itemProperty());
 
-        // Allow row height to expand based on text
         studentCand_table.setFixedCellSize(-1);
 
         return cell;
     }
-
-    // ----------------------------
-    // Delete Candidate
-    // ----------------------------
     @FXML
     public void deleteCandidate() {
 
@@ -303,9 +274,6 @@ public class showStudentCandidatesController implements Initializable {
         new Thread(task).start();
     }
 
-    // ----------------------------
-    // Add Candidate
-    // ----------------------------
     @FXML
     public void addCandidate(ActionEvent e) {
 
@@ -322,9 +290,6 @@ public class showStudentCandidatesController implements Initializable {
         }
     }
 
-    // ----------------------------
-    // Back
-    // ----------------------------
     @FXML
     public void onBack() {
 

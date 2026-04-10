@@ -8,6 +8,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Label?>
 
 <AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.nationalResultOverall">
    <children>
@@ -28,6 +32,14 @@
             <TableColumn fx:id="percentCol" prefWidth="90.0" text="Percentage" />
         </columns>
       </TableView>
+       <StackPane fx:id="progressOverlay" visible="false"
+                  style="-fx-background-color: rgba(0,0,0,0.4);"
+                  mouseTransparent="false">
+           <VBox alignment="CENTER" spacing="10" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 8;">
+               <ProgressBar fx:id="progressBar" prefWidth="300"/>
+               <Label fx:id="progressLabel" text="Processing…"/>
+           </VBox>
+       </StackPane>
       <TextField fx:id="constField" layoutY="48.0" prefHeight="26.0" prefWidth="678.0" promptText="Search by Constituency" />
       <TableView fx:id="symbolTable" layoutY="534.0" prefHeight="148.0" prefWidth="452.0">
         <columns>
@@ -49,6 +61,6 @@
       <Label fx:id="totalVoterLabel" layoutX="696.0" layoutY="53.0" prefHeight="18.0" prefWidth="205.0" text="Total Voters :" />
       <Label fx:id="totalCandLabel" layoutX="696.0" layoutY="85.0" prefHeight="18.0" prefWidth="206.0" text="Total Vote Casted :" />
       <Button fx:id="individualBtn" layoutX="486.0" layoutY="485.0" mnemonicParsing="false" onAction="#onIndividualBtnClicked" prefHeight="26.0" prefWidth="191.0" text="Individual Constituency Result" />
-      <Button fx:id="backBtn" layoutX="838.0" layoutY="644.0" mnemonicParsing="false" styleClass="back" text="Back" />
+      <Button fx:id="backBtn" layoutX="838.0" layoutY="644.0" mnemonicParsing="false" onAction="#onExit" styleClass="back" text="Exit" />
    </children>
 </AnchorPane>

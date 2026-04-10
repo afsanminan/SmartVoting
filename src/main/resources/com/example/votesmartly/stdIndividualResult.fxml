@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="683.0" prefWidth="915.0" stylesheets="@opening.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.votesmartly.stdIndividualResultController">
    <children>
       <Label fx:id="postLabel" layoutX="217.0" prefHeight="42.0" prefWidth="698.0" text="Result of Post :">
@@ -40,6 +39,6 @@
             <Font name="Lucida Sans Demibold Italic" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="backBtn" layoutX="749.0" layoutY="620.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="66.0" text="Back" />
+      <Button fx:id="backBtn" layoutX="749.0" layoutY="620.0" mnemonicParsing="false" onAction="#onBack" prefHeight="26.0" prefWidth="66.0" text="Back" />
    </children>
 </AnchorPane>
